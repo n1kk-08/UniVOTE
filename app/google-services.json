@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "658166261331",
+    "project_id": "univote-ed8b4",
+    "storage_bucket": "univote-ed8b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:658166261331:android:bcc50cb58005d3b6a788a6",
+        "android_client_info": {
+          "package_name": "com.example.univote"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "658166261331-o6ed0g56vrmh3iqfe4omrf5mkck7kj4s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2K28BnVbxlg0qzR6tlB75FL6MmY-HK7I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "658166261331-o6ed0g56vrmh3iqfe4omrf5mkck7kj4s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

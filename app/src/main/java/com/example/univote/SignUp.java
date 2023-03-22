@@ -54,6 +54,7 @@ public class SignUp extends AppCompatActivity {
                                 if (!confirmpassword.isEmpty()){
                                     ConfirmPwd.setError(null);
                                     ConfirmPwd.setErrorEnabled(false);
+
                                 }else{
                                     ConfirmPwd.setError("Enter Password Again");
                                 }
