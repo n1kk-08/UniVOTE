@@ -25,6 +25,7 @@ public class SignUp extends AppCompatActivity {
         public void onClick(View v) {
             Toast.makeText(SignUp.this, "Log In", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(SignUp.this, MainActivity.class));
+            finish();
         }
     });
     }
