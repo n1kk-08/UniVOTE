@@ -47,10 +47,11 @@
 
             <!--            Username-->
             <com.google.android.material.textfield.TextInputEditText
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
-                android:inputType="text"
+                android:inputType="textEmailAddress"
                 android:textColorHint="#757575" />
 
         </com.google.android.material.textfield.TextInputLayout>
