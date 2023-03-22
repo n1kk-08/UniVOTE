@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     TextView forgetTxt;
-    Button SignUp;
+    Button SignUp, Login;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         SignUp = findViewById(R.id.SignUp);
+        Login = findViewById(R.id.Login);
         forgetTxt = findViewById(R.id.forgetTxt);
         forgetTxt.setOnClickListener(new View.OnClickListener() {
             @Override

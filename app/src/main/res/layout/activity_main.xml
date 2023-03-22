@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:hint="@string/username">
+            android:hint="@string/email">
 
             <!--            Username-->
             <com.google.android.material.textfield.TextInputEditText
@@ -94,6 +94,7 @@
     <!--        android:textColor="@color/white" />-->
 
     <Button
+        android:id="@+id/Login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -117,9 +118,6 @@
         android:layout_marginTop="15dp"
         android:layout_marginRight="20dp"
         android:backgroundTint="@color/white"
-        android:shadowColor="@color/black"
-        android:shadowDx="10"
-        android:shadowDy="10"
         android:shadowRadius="60"
         android:text="@string/signup"
         android:textColor="@color/c1" />

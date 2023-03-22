@@ -4,8 +4,9 @@
     <string name="signup">Sign Up</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
+    <string name="confirmpassword">Confirm Password</string>
     <string name="fullname">Full Name</string>
-    <string name="email">Enrollment No.</string>
+    <string name="email">Email</string>
     <string name="batch">Batch No.</string>
     <string name="forgetpassword">Forget Password?</string>
 </resources>
