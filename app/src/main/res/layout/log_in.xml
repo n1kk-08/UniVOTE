@@ -7,7 +7,7 @@
     android:layout_margin="15dp"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".LogIn">
 
     <ImageView
         android:id="@+id/imageView"
@@ -111,7 +111,7 @@
         tools:ignore="DuplicateSpeakableTextCheck" />
 
     <Button
-        android:id="@+id/SignUp"
+        android:id="@+id/dont_have_acc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

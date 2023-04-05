@@ -7,6 +7,10 @@
     <string name="confirmpassword">Confirm Password</string>
     <string name="fullname">Full Name</string>
     <string name="email">Email</string>
+    <string name="logout">Log Out</string>
+    <string name="resetpwd">Reset Password</string>
     <string name="batch">Batch No.</string>
     <string name="forgetpassword">Forget Password?</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

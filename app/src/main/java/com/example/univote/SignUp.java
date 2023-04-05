@@ -1,21 +1,48 @@
 package com.example.univote;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.ContactsContract;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.regex.Pattern;
+
 
 public class SignUp extends AppCompatActivity {
 
-    Button login,signup;
-    TextInputLayout EmailID, Fullname, Pwd, ConfirmPwd,Batchno;
+    private TextInputLayout userName, userPass, userEmail, userBatch;
+    private Button SignupBtn;
+    Button loginbtn;
+    private FirebaseAuth mAuth;
+
+    public static final String PREFERENCES = "prefKey";
+    public static final String Name = "nameKey";
+    public static final String Email = "emailKey";
+    public static final String Password = "passwordKey";
+    public static final String Batch = "batchKey";
+
+    SharedPreferences sharedPreferences;
+    String name, password, email, batch;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -23,62 +50,90 @@ public class SignUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_up);
 
-        login = findViewById(R.id.Login);
-        signup = findViewById(R.id.Signup);
-        Fullname = findViewById(R.id.fullname);
-        EmailID = findViewById((R.id.enrollment_no));
-        Pwd = findViewById(R.id.new_signup_password);
-        ConfirmPwd =findViewById(R.id.new_signup_confirm_password);
-        Batchno = findViewById(R.id.batchno);
+        sharedPreferences = getApplicationContext().getSharedPreferences(PREFERENCES,MODE_PRIVATE);
 
-        signup.setOnClickListener(new View.OnClickListener() {
+        loginbtn = findViewById(R.id.have_acc);
+        loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String emailid = EmailID.getEditText().getText().toString();
-                String password = Pwd.getEditText().getText().toString();
-                String confirmpassword = ConfirmPwd.getEditText().getText().toString();
-                String batch = Batchno.getEditText().getText().toString();
-                String fullname = Fullname.getEditText().getText().toString();
-                if(!fullname.isEmpty()){
-                    Fullname.setError(null);
-                    Fullname.setErrorEnabled(false);
-                    if (!emailid.isEmpty()){
-                        EmailID.setError(null);
-                        EmailID.setErrorEnabled(false);
-                        if (!batch.isEmpty()){
-                            Batchno.setError(null);
-                            Batchno.setErrorEnabled(false);
-                            if (!password.isEmpty()){
-                                Pwd.setError(null);
-                                Pwd.setErrorEnabled(false);
-                                if (!confirmpassword.isEmpty()){
-                                    ConfirmPwd.setError(null);
-                                    ConfirmPwd.setErrorEnabled(false);
-
-                                }else{
-                                    ConfirmPwd.setError("Enter Password Again");
-                                }
-                            }else{
-                                Pwd.setError("Enter Strong Password");
-                            }
-                        }else{
-                            Batchno.setError("Enter Batch no.");
-                        }
-                    }else{
-                        EmailID.setError("Enter email");
-                    }
-                }else{
-                    Fullname.setError("Enter Full Name");
-                }
+                onBackPressed();
             }
         });
-    login.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Toast.makeText(SignUp.this, "Log In", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(SignUp.this, MainActivity.class));
-            finish();
+
+        userName = findViewById(R.id.fullname);
+        userPass =findViewById(R.id.new_signup_password);
+        userEmail = findViewById(R.id.enrollment_no);
+        userBatch = findViewById(R.id.batchno);
+        SignupBtn = findViewById(R.id.signupbtn);
+        mAuth = FirebaseAuth.getInstance();
+
+        SignupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                name  = userName.getEditText().getText().toString().trim();
+                password  = userPass.getEditText().getText().toString().trim();
+                email  = userEmail.getEditText().getText().toString().trim();
+                batch  = userBatch.getEditText().getText().toString().trim();
+
+                if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(batch) && Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                    createUser(email,password);
+                }else {
+                    Toast.makeText(SignUp.this, "Please fill all the credentials", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+
+    }
+    private void createUser(String email, String password){
+        mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                                                                       @Override
+                                                                                       public void onComplete(@NonNull Task<AuthResult> task) {
+                                                                                           if (task.isSuccessful()) {
+                                                                                               Toast.makeText(SignUp.this, "User Created", Toast.LENGTH_SHORT).show();
+
+                                                                                               verifyEmail();
+                                                                                           } else {
+                                                                                               Toast.makeText(SignUp.this, "Fail Try Again", Toast.LENGTH_SHORT).show();
+                                                                                           }
+                                                                                     }
+        });
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(SignUp.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+    }
+
+    private void verifyEmail() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null){
+            user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()){
+
+                        SharedPreferences.Editor pref = sharedPreferences.edit();
+                        pref.putString(Name,name);
+                        pref.putString(Email,email);
+                        pref.putString(Password,password);
+                        pref.putString(Batch,batch);
+                        pref.commit();
+                        //email sent;
+
+                        Toast.makeText(SignUp.this, "Email Sent", Toast.LENGTH_SHORT).show();
+
+                        FirebaseAuth.getInstance().signOut();
+                        startActivity(new Intent(SignUp.this, LogIn.class));
+                        finish();
+                    }else {
+                        mAuth.signOut();
+                        finish();
+                    }
+                }
+            });
         }
-    });
     }
 }

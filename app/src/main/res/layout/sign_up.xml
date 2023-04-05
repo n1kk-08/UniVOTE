@@ -118,7 +118,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/Signup"
+            android:id="@+id/signupbtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -127,7 +127,7 @@
             android:text="@string/signup"/>
 
         <Button
-            android:id="@+id/Login"
+            android:id="@+id/have_acc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"

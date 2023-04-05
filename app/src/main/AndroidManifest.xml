@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package = "com.example.univote"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -12,7 +18,7 @@
         android:theme="@style/Theme.UniVOTE"
         tools:targetApi="31">
         <activity
-            android:name=".HomeScreen"
+            android:name=".Dashboard"
             android:exported="false" />
         <activity
             android:name=".SplashScreen"
@@ -30,7 +36,7 @@
             android:name=".ForgetPasssword"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".LogIn"
             android:exported="false"></activity>
 
         <meta-data

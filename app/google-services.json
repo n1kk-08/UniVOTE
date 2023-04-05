@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "658166261331",
-    "project_id": "univote-ed8b4",
-    "storage_bucket": "univote-ed8b4.appspot.com"
+    "project_number": "650479798191",
+    "project_id": "univote-58a6f",
+    "storage_bucket": "univote-58a6f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:658166261331:android:bcc50cb58005d3b6a788a6",
+        "mobilesdk_app_id": "1:650479798191:android:1c18bdeb5c0830e3b5515a",
         "android_client_info": {
           "package_name": "com.example.univote"
         }
       },
       "oauth_client": [
         {
-          "client_id": "658166261331-o6ed0g56vrmh3iqfe4omrf5mkck7kj4s.apps.googleusercontent.com",
+          "client_id": "650479798191-pq55hpja71ih33m49r62qraulv31r9rp.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD2K28BnVbxlg0qzR6tlB75FL6MmY-HK7I"
+          "current_key": "AIzaSyDfL98Vz-l2l5owyzcDRieqaXHhpd37lFU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "658166261331-o6ed0g56vrmh3iqfe4omrf5mkck7kj4s.apps.googleusercontent.com",
+              "client_id": "650479798191-pq55hpja71ih33m49r62qraulv31r9rp.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
