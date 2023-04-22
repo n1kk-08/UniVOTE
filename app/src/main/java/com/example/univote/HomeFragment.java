@@ -35,6 +35,8 @@ public class HomeFragment extends Fragment {
     private TextView nametxt, batchtxt;
     private FirebaseFirestore firebaseFirestore;
     private String uid;
+    private String nameUser;
+    FirebaseUser mUser;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -59,6 +61,8 @@ public class HomeFragment extends Fragment {
         batchtxt = view.findViewById(R.id.batch_profile);
         createBtn = view.findViewById(R.id.create_btn);
         voteBtn = view.findViewById(R.id.vote_btn);
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
+        nameUser = mUser.getDisplayName();
 
 
 
@@ -68,6 +72,11 @@ public class HomeFragment extends Fragment {
         pref.commit();
 
         createBtn.setOnClickListener(v -> startActivity(new Intent(requireContext(),CreateCandidate.class)));
+        if (nameUser.equals("Nikk")){
+            createBtn.setVisibility(View.VISIBLE);
+        }else{
+            createBtn.setVisibility(View.GONE);
+        }
 
 //        firebaseFirestore.collection("Users")
 //                .document(user.getUid())
