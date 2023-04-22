@@ -44,6 +44,7 @@ public class SignUp extends AppCompatActivity {
     public static final String Batch = "batchKey";
 
     SharedPreferences sharedPreferences;
+    DatabaseReference reference;
     String name, password, email, batch;
 
 
@@ -71,6 +72,7 @@ public class SignUp extends AppCompatActivity {
         SignupBtn = findViewById(R.id.signupbtn);
         mAuth = FirebaseAuth.getInstance();
         mUser = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("user");
 
         SignupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +112,8 @@ public class SignUp extends AppCompatActivity {
                             Toast.makeText(SignUp.this, "Error"+ Objects.requireNonNull(task1.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
+                    storingdata user = new storingdata(name,email,batch,password);
+                    reference.child(Objects.requireNonNull(mUser.getUid())).setValue(user);
 
                 }else{
                     Toast.makeText(SignUp.this, "Error"+ Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
