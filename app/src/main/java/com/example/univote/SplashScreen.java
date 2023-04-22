@@ -7,6 +7,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -22,14 +25,6 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
 
-//        changeScreen = new Timer();
-//        changeScreen.schedule(new TimerTask() {
-//            @Override
-//            public void run() {
-//                startActivity(new Intent(SplashScreen.this, LogIn.class));
-//                finish();
-//            }
-//        },500);
     }
     protected void onStart(){
         super.onStart();
@@ -38,8 +33,10 @@ public class SplashScreen extends AppCompatActivity {
         sharedPreferences = getApplicationContext().getSharedPreferences(PREFERENCES,MODE_PRIVATE);
         boolean bol = sharedPreferences.getBoolean(IsLogIn,false);
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
         new Handler().postDelayed(()->{
-            if (bol){
+            if (user != null){
                 startActivity(new Intent(SplashScreen.this, Dashboard.class));
             }else{
                 startActivity(new Intent(SplashScreen.this,LogIn.class));
