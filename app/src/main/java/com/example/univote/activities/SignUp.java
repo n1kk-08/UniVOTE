@@ -1,4 +1,4 @@
-package com.example.univote;
+package com.example.univote.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,9 +11,9 @@ import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.univote.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -26,7 +26,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
-import java.util.regex.Pattern;
 
 
 public class SignUp extends AppCompatActivity {
@@ -83,91 +82,93 @@ public class SignUp extends AppCompatActivity {
                  batch  = userBatch.getEditText().getText().toString().trim();
 
                 if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(batch) && Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-//                    createUser(email,password);
-                    newUser(email,password);
+                    createUser(email,password);
+//                    newUser(email,password);
                 }else {
                     Toast.makeText(SignUp.this, "Please fill all the credentials", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-
     }
 
-    private void newUser(String email, String password) {
-        mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    mUser = mAuth.getCurrentUser();
-                    UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder()
-                            .setDisplayName(String.valueOf(userName.getEditText().getText()))
-                            .build();
-                    mUser.updateProfile(userProfileChangeRequest).addOnCompleteListener(task1 -> {
-                        if (task1.isSuccessful()){
-                            startActivity(new Intent(SignUp.this, LogIn.class));
-                            Toast.makeText(SignUp.this, "User created", Toast.LENGTH_SHORT).show();
-                            finish();
-                        }else{
-                            Toast.makeText(SignUp.this, "Error"+ Objects.requireNonNull(task1.getException()).getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    storingdata user = new storingdata(name,email,batch,password);
-                    reference.child(Objects.requireNonNull(mUser.getUid())).setValue(user);
-
-                }else{
-                    Toast.makeText(SignUp.this, "Error"+ Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
-//    private void createUser(String email, String password) {
+//    private void newUser(String email, String password) {
 //        mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
 //            @Override
 //            public void onComplete(@NonNull Task<AuthResult> task) {
-//                if (task.isSuccessful()){
-//                    Toast.makeText(SignUp.this, "User Created", Toast.LENGTH_SHORT).show();
+//                if(task.isSuccessful()){
+//                    mUser = mAuth.getCurrentUser();
+//                    UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder()
+//                            .setDisplayName(String.valueOf(userName.getEditText().getText()))
+//                            .build();
+//                    mUser.updateProfile(userProfileChangeRequest).addOnCompleteListener(task1 -> {
+//                        if (task1.isSuccessful()){
+//                            startActivity(new Intent(SignUp.this, LogIn.class));
+//                            Toast.makeText(SignUp.this, "User created", Toast.LENGTH_SHORT).show();
+//                            finish();
+//                        }else{
+//                            Toast.makeText(SignUp.this, "Error"+ Objects.requireNonNull(task1.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//                    storingdata user = new storingdata(name,email,batch,password);
+//                    reference.child(Objects.requireNonNull(mUser.getUid())).setValue(user);
 //
-//                    FirebaseUser user = mAuth.getCurrentUser();
-//                    if (user!= null){
-//                        SharedPreferences.Editor pref = sharedPreferences.edit();
-//                        pref.putString(Name,name);
-//                        pref.putString(Email,email);
-//                        pref.putString(Password,password);
-//                        pref.putString(Batch,batch);
-//                        pref.commit();
-//
-//                        FirebaseAuth.getInstance().signOut();
-//                        startActivity(new Intent(SignUp.this, LogIn.class));
-//                        finish();
-//                    }
 //                }else{
-//                    Toast.makeText(SignUp.this, "User not created", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(SignUp.this, "Error"+ Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
 //                }
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Toast.makeText(SignUp.this, "Something went wrong", Toast.LENGTH_SHORT).show();
 //            }
 //        });
 //    }
 
+    private void createUser(String email, String password) {
+        mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    Toast.makeText(SignUp.this, "User Created", Toast.LENGTH_SHORT).show();
 
-//    private void verifyEmail() {
-//        FirebaseUser user = mAuth.getCurrentUser();
-//        if (user != null){
-//            SharedPreferences.Editor pref = sharedPreferences.edit();
-//            pref.putString(Name,name);
-//            pref.putString(Email,email);
-//            pref.putString(Password,password);
-//            pref.putString(Batch,batch);
-//            pref.commit();
-//            FirebaseAuth.getInstance().signOut();
-//            startActivity(new Intent(SignUp.this, LogIn.class));
-//            finish();
-//        }
-//
-//    }
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    if (user!= null){
+                        SharedPreferences.Editor pref = sharedPreferences.edit();
+                        pref.putString(Name,name);
+                        pref.putString(Email,email);
+                        pref.putString(Password,password);
+                        pref.putString(Batch,batch);
+                        pref.commit();
+
+                        FirebaseAuth.getInstance().signOut();
+                        startActivity(new Intent(SignUp.this, LogIn.class));
+                        finish();
+                    }
+                }else{
+                    Toast.makeText(SignUp.this, "User not created", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(SignUp.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    private void verifyEmail() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null){
+            SharedPreferences.Editor pref = sharedPreferences.edit();
+            pref.putString(Name,name);
+            pref.putString(Email,email);
+            pref.putString(Password,password);
+            pref.putString(Batch,batch);
+            pref.commit();
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(SignUp.this, LogIn.class));
+            finish();
+        }else{
+            mAuth.signOut();
+            finish();
+        }
+
+    }
 }

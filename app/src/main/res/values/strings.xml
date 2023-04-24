@@ -6,7 +6,7 @@
     <string name="password">Password</string>
     <string name="confirmpassword">Confirm Password</string>
     <string name="fullname">Full Name</string>
-    <string name="name">Name ~</string>
+    <string name="name">Name</string>
     <string name="submit">Submit</string>
     <string name="email">Email</string>
     <string name="logout">Log Out</string>
@@ -14,7 +14,7 @@
     <string name="profile">Profile</string>
     <string name="batch">Batch </string>
     <string name="activepolls">Active Polls</string>
-    <string name="create">Create Poll</string>
+    <string name="create">Create Candidate</string>
     <string name="vote">Vote</string>
     <string name="forgetpassword">Forget Password?</string>
     <!-- TODO: Remove or change this placeholder text -->

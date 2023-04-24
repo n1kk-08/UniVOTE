@@ -1,4 +1,4 @@
-package com.example.univote;
+package com.example.univote.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -15,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.univote.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,7 +26,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -89,8 +88,9 @@ public class LogIn extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
                                     Toast.makeText(LogIn.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(LogIn.this, Dashboard.class));
-                                    finish();
+                                    verifyEmail();
+//                                    startActivity(new Intent(LogIn.this, Dashboard.class));
+//                                    finish();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -112,36 +112,38 @@ public class LogIn extends AppCompatActivity {
         });
     }
 
-//    private void verifyEmail() {
-//        FirebaseUser user = mAuth.getCurrentUser();
-//        assert user!= null;
-//        String name = sharedPreferences.getString(Name, null);
-//        String email = sharedPreferences.getString(Password, null);
-//        String password = sharedPreferences.getString(Email, null);
-//        String batch = sharedPreferences.getString(Batch, null);
-//
-//        if (name != null && email != null && password != null && batch!= null) {
-//            String uid = mAuth.getUid();
-//            Map<String, String> map = new HashMap<>();
-//            map.put("name", name);
-//            map.put("email", email);
-//            map.put("password", password);
-//            map.put("batch", batch);
-//            map.put("uid", uid);
-//            firebaseFirestore.collection("Users")
-//                    .document(uid)
-//                    .set(map)
-//                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<Void> task) {
-//                            if (task.isSuccessful()) {
-//
-//                            } else {
-//                                mAuth.signOut();
-//                                Toast.makeText(LogIn.this, "Data not stored", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    });
+    private void verifyEmail() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        assert user!= null;
+        String name = sharedPreferences.getString(Name, null);
+        String email = sharedPreferences.getString(Password, null);
+        String password = sharedPreferences.getString(Email, null);
+        String batch = sharedPreferences.getString(Batch, null);
+
+        if (name != null && email != null && password != null && batch!= null) {
+            String uid = mAuth.getUid();
+            Map<String, String> map = new HashMap<>();
+            map.put("name", name);
+            map.put("email", email);
+            map.put("password", password);
+            map.put("batch", batch);
+            map.put("uid", uid);
+            firebaseFirestore.collection("Users")
+                    .document(uid)
+                    .set(map)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                startActivity(new Intent(LogIn.this,Dashboard.class));
+                                finish();
+
+                            } else {
+                                mAuth.signOut();
+                                Toast.makeText(LogIn.this, "Data not stored", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
 ////            StorageReference imagePath = reference.child("Storage_reference").child(uid);
 ////            imagePath.putFile(Uri.parse(name)).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
 ////                @Override
@@ -150,8 +152,8 @@ public class LogIn extends AppCompatActivity {
 ////                        imagePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
 ////                            @Override
 ////                            public void onSuccess(Uri uri) {
-//
-//                            }
+
+                            }
 ////                        });
 ////                    } else {
 ////                        Toast.makeText(LogIn.this, "" + task.getException(), Toast.LENGTH_SHORT).show();
@@ -162,5 +164,5 @@ public class LogIn extends AppCompatActivity {
 ////        }else{
 ////            Toast.makeText(LogIn.this, "User data not found", Toast.LENGTH_SHORT).show();
 ////        }
-//    }
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.univote;
+package com.example.univote.activities;
 
 public class storingdata {
     String fullname;

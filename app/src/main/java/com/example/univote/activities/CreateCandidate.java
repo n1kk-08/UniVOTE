@@ -1,4 +1,4 @@
-package com.example.univote;
+package com.example.univote.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,11 +15,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.univote.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -33,11 +33,12 @@ public class CreateCandidate extends AppCompatActivity {
     private EditText candidateName;
     private Spinner candidateSpinner;
     private String[] candPost = {"Batch-Representative","Class-Representative"};
-
     private Button submitbtn;
     private Uri mainUri = null;
     StorageReference reference;
     FirebaseFirestore firebaseFirestore;
+
+//    DatabaseReference reference;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -51,7 +52,7 @@ public class CreateCandidate extends AppCompatActivity {
         candidateName = findViewById(R.id.candidate_name);
         submitbtn = findViewById(R.id.candidate_submit_btn);
         candidateSpinner = findViewById(R.id.candidate_spinner);
-
+//        reference = FirebaseDatabase.getInstance().getReference("Candidate");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_dropdown_item_1line,candPost);
         candidateSpinner.setAdapter(adapter);
@@ -64,6 +65,9 @@ public class CreateCandidate extends AppCompatActivity {
                 String post = candidateSpinner.getSelectedItem().toString();
 
                 if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(post)){
+
+//                    createCandidate(name,post);
+
                     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     Map<String,Object> map = new HashMap<>();
                     map.put("name",name);
@@ -75,7 +79,6 @@ public class CreateCandidate extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<DocumentReference> task) {
                                     if (task.isSuccessful()){
-
                                         startActivity(new Intent(CreateCandidate.this,Dashboard.class));
                                         finish();
                                     }else{
@@ -86,9 +89,12 @@ public class CreateCandidate extends AppCompatActivity {
                 }else{
                     Toast.makeText(CreateCandidate.this, "Enter details", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
-
     }
+
+//    private void createCandidate(String name, String post) {
+//        Candidate_data candidateData = new Candidate_data(name,post);
+//        reference.child(Objects.requireNonNull("new Candidate")).setValue(candidateData);
+//    }
 }

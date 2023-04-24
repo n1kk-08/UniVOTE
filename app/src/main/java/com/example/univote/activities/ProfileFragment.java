@@ -1,4 +1,4 @@
-package com.example.univote;
+package com.example.univote.activities;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,8 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.univote.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -56,9 +55,9 @@ public class ProfileFragment extends Fragment {
         Logout = view.findViewById(R.id.Logout);
         username = view.findViewById(R.id.name_profile);
 
-        mUser = FirebaseAuth.getInstance().getCurrentUser();
-        String nameUser = mUser.getDisplayName();
-        username.setText(nameUser);
+//        mUser = FirebaseAuth.getInstance().getCurrentUser();
+//        String nameUser = mUser.getDisplayName();
+//        username.setText(nameUser);
 
         Logout.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
